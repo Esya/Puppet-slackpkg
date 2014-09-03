@@ -42,7 +42,7 @@ Puppet::Type.type(:package).provide :slackpkg, :parent => Puppet::Provider::Pack
 				line=self.sanitize(line)
 				Puppet.debug("Search-line="+line.inspect)
 				name=Regexp.escape($package)
-				if line.match(/^\[[ ]*(installed|uninstalled|upgrade)[ ]*\] \- #{name}\-.*/) 
+				if line.match(/^\[[ ]*(installed|uninstalled|upgrade)[ ]*\] \- #{name}\-\d.*/) 
 					Puppet.debug("Found a match! status="+$1)
 					$status = $1
 				end
@@ -118,7 +118,7 @@ Puppet::Type.type(:package).provide :slackpkg, :parent => Puppet::Provider::Pack
 				line=self.sanitize(line)
 				Puppet.debug(line.inspect)
 				name=Regexp.escape(@resource[:name])
-				if line.match(/^\[[ ]*(installed|uninstalled|upgrade)[ ]*\] \- #{name}\-.*/)
+				if line.match(/^\[[ ]*(installed|uninstalled|upgrade)[ ]*\] \- #{name}\-\d.*/)
 					Puppet.debug("Found! status=#{$1}")
 					$status=$1
 					if $status=='installed' or $status=='upgrade'
